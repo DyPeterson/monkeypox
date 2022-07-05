@@ -1,4 +1,6 @@
-##  Teamweek - Monkeypox 
+#  Teamweek - Monkeypox Data Pipeline
+
+![titlecard](./img/title.png)
 
 ###  Contributors:
 
@@ -31,6 +33,8 @@
 ###  Useful Links:
 
 ####  Link to project on GitHub:
+
+[GitHub](https://github.com/DyPeterson/monkeypox)
 
 ####  Link to Kaggle Dataset:
 
