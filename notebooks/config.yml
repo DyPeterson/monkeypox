@@ -1,0 +1,20 @@
+data:
+  daily_cases_data: ../data/Daily_Country_Wise_Confirmed_Cases.csv
+  worldwide_data: ../data/Monkey_Pox_Cases_Worldwide.csv
+
+db_user: loader
+db_pass: mypass
+db_host: 127.0.0.1:3306
+db_name: monkeypox_db
+local: False
+project: dearliza
+dataset: airspace
+creds: /home/fossa/data/dont_worry_about_it/dearHenry.json
+external_tables:
+  daily_cases: 
+    bucket: hole-in-the
+    blob: Daily_Country_Wise_Confirmed_Cases.csv
+  worldwide_cases:  
+    bucket: hole-in-the
+    blob: Monkey_Pox_Cases_Worldwide.csv
+drop_and_replace: True
