@@ -2,6 +2,14 @@
 
 ###  Contributors:
 
+- [Jess Schueler](https://github.com/jessgschueler)
+
+- [Bri Chavez](https://github.com/BriChavez)
+
+- [Jarret Jeter](https://github.com/jarretjeter)
+
+- [Dylan Peterson](https://github.com/DyPeterson)
+
 ###  Description:
 
 ####  Programs used:
