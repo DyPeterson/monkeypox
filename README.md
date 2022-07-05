@@ -32,6 +32,8 @@
 
 ####  Link to project on GitHub:
 
+[GitHub](https://github.com/DyPeterson/monkeypox)
+
 ####  Link to Kaggle Dataset:
 
 [Monkeypox Dataset](https://www.kaggle.com/datasets/deepcontractor/monkeypox-dataset-daily-updated)
