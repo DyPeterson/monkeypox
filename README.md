@@ -18,7 +18,13 @@
 
 - [Windows Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=US) ( Running: [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install) ([ubuntu 20.04](https://releases.ubuntu.com/20.04/)))
 
-###  Technologies Used:
+####  Technologies Used:
+
+- [Python](https://www.python.org/)
+
+- [Apache Spark](https://spark.apache.org/)(Running [PySpark](https://spark.apache.org/docs/latest/api/python/) Module through Python)
+
+- [Apache Airflow](https://airflow.apache.org/)
 
 ###  Setup & Installation:
 
