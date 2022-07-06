@@ -9,4 +9,9 @@ fsspec
 google-cloud-storage
 google-cloud-bigquery
 kaggle
+<<<<<<< HEAD
 pandas_gbq
+=======
+airflow
+quinn
+>>>>>>> 5f3e298b47b96cd5df028342c05c98447c54e7a1
