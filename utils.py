@@ -26,4 +26,4 @@ def date_minus_weeks(week_num:int) -> str:
 
     - week_num(Integer): number of weeks to go back in time from todays current date
     """
-    return str(date.today() - timedelta(weeks = x))
+    return str(date.today() - timedelta(weeks = week_num))
