@@ -9,6 +9,7 @@ fsspec
 google-cloud-storage
 google-cloud-bigquery
 kaggle
-airflow
+# airflow
 quinn
 bar-chart-race==0.1.0
+ffmpeg-python==0.2.0
