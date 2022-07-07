@@ -9,5 +9,6 @@ fsspec
 google-cloud-storage
 google-cloud-bigquery
 kaggle
+pandas_gbq
 airflow
 quinn
