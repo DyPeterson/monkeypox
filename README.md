@@ -14,6 +14,8 @@
 
 ###  Description:
 
+Data Stack Academy team week project that downloads a kaggle dataset and runs it through a data pipeline. 
+
 ####  Programs used:
 
 - [Visual Code Studio](https://code.visualstudio.com/)
