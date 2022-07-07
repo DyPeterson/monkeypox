@@ -11,3 +11,4 @@ google-cloud-bigquery
 kaggle
 airflow
 quinn
+bar-chart-race==0.1.0
