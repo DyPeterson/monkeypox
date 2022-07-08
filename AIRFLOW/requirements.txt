@@ -1,0 +1,14 @@
+pandas
+matplotlib
+jupyterlab
+pyyaml
+pyarrow
+pyspark
+gcsfs
+fsspec
+google-cloud-storage
+google-cloud-bigquery
+kaggle
+pandas_gbq
+apache-airflow
+quinn
