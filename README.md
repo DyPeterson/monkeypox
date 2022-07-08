@@ -44,6 +44,8 @@ Data Stack Academy team week project that downloads a kaggle dataset and runs it
 
 ###  Details:
 
+This project downloads a daily updated CSV from Kaggle. Then applies cleaning and transformations on it. Also it has data visualization and aggregate dataframes that it draws from the dataset. From there it then takes that CSV and pushes it into the cloud(Google Cloud Services). 
+
 ###  Known Bugs:
 
 No known bugs at this time.
