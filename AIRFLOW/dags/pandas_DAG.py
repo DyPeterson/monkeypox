@@ -77,12 +77,12 @@ def update(shape_xcom):
 )
 #function that calls all of our tasks to create dag
 def pandas_dag():
-    read_task = read()
     api_task = api_pull()
-    update_task = update(read())
-    echo_to_file=BashOperator(
-        task_id='echo_to_file',
-        bash_command=f'echo {update(read())} > /opt/airflow/dags/shape.txt')
-    read_task >> api_task >> update_task >> echo_to_file
+    read_task = read()
+    update_task = update(read_task)
+    echo_shape=BashOperator(
+        task_id='echo_shape',
+        bash_command=f'echo {update_task} > /opt/airflow/dags/shape.txt')
+    api_task >> read_task >> update_task >> echo_shape
 
 pandas_dag = pandas_dag()
