@@ -30,6 +30,10 @@ Data Stack Academy team week project that downloads a kaggle dataset and runs it
 
 - [Apache Airflow](https://airflow.apache.org/)
 
+- [Pandas](https://pandas.pydata.org/)
+
+- [Google Cloud Platform](https://cloud.google.com/)
+
 ###  Setup & Installation:
 
 ###  Useful Links:
