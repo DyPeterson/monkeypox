@@ -30,6 +30,10 @@ Data Stack Academy team week project that downloads a kaggle dataset and runs it
 
 - [Apache Airflow](https://airflow.apache.org/)
 
+- [Pandas](https://pandas.pydata.org/)
+
+- [Google Cloud Platform](https://cloud.google.com/)
+
 ###  Setup & Installation:
 
 ###  Useful Links:
@@ -43,6 +47,8 @@ Data Stack Academy team week project that downloads a kaggle dataset and runs it
 [Monkeypox Dataset](https://www.kaggle.com/datasets/deepcontractor/monkeypox-dataset-daily-updated)
 
 ###  Details:
+
+This project downloads a daily updated CSV from Kaggle. Then applies cleaning and transformations on it. Also it has data visualization and aggregate dataframes that it draws from the dataset. From there it then takes that CSV and pushes it into the cloud(Google Cloud Services). 
 
 ###  Known Bugs:
 
