@@ -11,6 +11,7 @@ import re
 from google.cloud import bigquery
 import pandas as pd 
 import pandas_gbq
+from sqlalchemy import false
 
 #create our tasks
 @task
@@ -55,7 +56,8 @@ def update(shape_xcom):
         daily_df = daily_df.transpose()
         daily_df.reset_index(inplace=True)
         daily_df = daily_df.rename(columns={'index': 'Date'})
-        daily_df.to_csv(f"dags/Daily_CC_{date.today()}", header=True)
+        daily_df.columns = daily_df.columns.str.replace(' ','_')
+        daily_df.to_csv(f"dags/Daily_CC_{date.today()}", header=True, index=False)
         return daily_df.shape
     #if there are new columns, overwrite the dataset and create new CSV
     else:
@@ -63,7 +65,8 @@ def update(shape_xcom):
         daily_df = daily_df.transpose()
         daily_df.reset_index(inplace=True)
         daily_df = daily_df.rename(columns={'index': 'Date'})
-        daily_df.to_csv(f"dags/Daily_CC_{date.today()}", header=True)
+        daily_df.columns = daily_df.columns.str.replace(' ','_')
+        daily_df.to_csv(f"dags/Daily_CC_{date.today()}", header=True, index=False)
         return daily_df.shape
 
 @task
@@ -72,13 +75,14 @@ def load():
     load to bigqquery
     """
     daily_cases = pd.read_csv(f"dags/Daily_CC_{date.today()}")
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/google_creds/dearHenry.json"
     client = bigquery.Client()
-    dataset_id = f"{client.project}.monkeypox"
+    dataset_id = f"{client.project}.daily_cases"
     dataset = bigquery.Dataset(dataset_id)
     dataset.location = 'us'
     dataset = client.create_dataset(dataset, exists_ok = True, timeout =100)
     project_id = 'dearliza'
-    table_id = 'monkeypox.monkeypox_data'
+    table_id = 'daily_cases.daily_cases'
 
     pandas_gbq.to_gbq(daily_cases, table_id, project_id = project_id, if_exists = 'replace', api_method = 'load_csv')
 
