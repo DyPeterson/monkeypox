@@ -11,6 +11,7 @@ import re
 from google.cloud import bigquery
 import pandas as pd 
 import pandas_gbq
+from sqlalchemy import false
 
 #create our tasks
 @task
@@ -22,7 +23,6 @@ def api_pull():
     api.authenticate()
     #download dataset 
     api.dataset_download_file('deepcontractor/monkeypox-dataset-daily-updated','Daily_Country_Wise_Confirmed_Cases.csv')
-    #create spark session
 
 
 @task
@@ -42,12 +42,13 @@ def update(shape_xcom):
     """
     Main function to create df of new data
     """
-    # daily_df = spark.read.csv('Daily_Country_Wise_Confirmed_Cases.csv', header=True)
+    #create df from new CSV and determine sghape
     daily_df = pd.read_csv('Daily_Country_Wise_Confirmed_Cases.csv')
-    # daily_shape = (len(daily_df.columns), daily_df.count())
     daily_shape = daily_df.shape
+    # if there is no new data, simply return the existing shape
     if daily_shape == shape_xcom:
         return daily_shape
+    #if there are new rows but no new columns, grab the new rows. The intention here is ease of scalability, so rather than completely overwriting the table every time, the new rows can be appended to the existing tables
     elif daily_shape[0] == shape_xcom[1]:
         rows = daily_shape[0] - shape_xcom[0]
         daily_df = daily_df.iloc[-rows]
@@ -55,14 +56,17 @@ def update(shape_xcom):
         daily_df = daily_df.transpose()
         daily_df.reset_index(inplace=True)
         daily_df = daily_df.rename(columns={'index': 'Date'})
-        daily_df.to_csv(f"dags/Daily_CC_{date.today()}", header=True)
+        daily_df.columns = daily_df.columns.str.replace(' ','_')
+        daily_df.to_csv(f"dags/Daily_CC_{date.today()}", header=True, index=False)
         return daily_df.shape
+    #if there are new columns, overwrite the dataset and create new CSV
     else:
         daily_df.set_index('Country', inplace=True)
         daily_df = daily_df.transpose()
         daily_df.reset_index(inplace=True)
         daily_df = daily_df.rename(columns={'index': 'Date'})
-        daily_df.to_csv(f"dags/Daily_CC_{date.today()}", header=True)
+        daily_df.columns = daily_df.columns.str.replace(' ','_')
+        daily_df.to_csv(f"dags/Daily_CC_{date.today()}", header=True, index=False)
         return daily_df.shape
 
 @task
@@ -71,13 +75,14 @@ def load():
     load to bigqquery
     """
     daily_cases = pd.read_csv(f"dags/Daily_CC_{date.today()}")
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/google_creds/dearHenry.json"
     client = bigquery.Client()
-    dataset_id = f"{client.project}.monkeypox"
+    dataset_id = f"{client.project}.daily_cases"
     dataset = bigquery.Dataset(dataset_id)
     dataset.location = 'us'
     dataset = client.create_dataset(dataset, exists_ok = True, timeout =100)
     project_id = 'dearliza'
-    table_id = 'monkeypox.monkeypox_data'
+    table_id = 'daily_cases.daily_cases'
 
     pandas_gbq.to_gbq(daily_cases, table_id, project_id = project_id, if_exists = 'replace', api_method = 'load_csv')
 
