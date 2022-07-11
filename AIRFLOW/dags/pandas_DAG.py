@@ -8,6 +8,9 @@ import os
 import pandas as pd
 from datetime import datetime, date
 import re
+from google.cloud import bigquery
+import pandas as pd 
+import pandas_gbq
 
 #create our tasks
 @task
@@ -62,12 +65,21 @@ def update(shape_xcom):
         daily_df.to_csv(f"dags/Daily_CC_{date.today()}", header=True)
         return daily_df.shape
 
-# @task
-# def load():
-#     """
-#     load to bigqquery
-#     """
+@task
+def load():
+    """
+    load to bigqquery
+    """
+    daily_cases = pd.read_csv(f"dags/Daily_CC_{date.today()}")
+    client = bigquery.Client()
+    dataset_id = f"{client.project}.monkeypox"
+    dataset = bigquery.Dataset(dataset_id)
+    dataset.location = 'us'
+    dataset = client.create_dataset(dataset, exists_ok = True, timeout =100)
+    project_id = 'dearliza'
+    table_id = 'monkeypox.monkeypox_data'
 
+    pandas_gbq.to_gbq(daily_cases, table_id, project_id = project_id, if_exists = 'replace', api_method = 'load_csv')
 
 #set dag attributes
 @dag(
@@ -80,9 +92,10 @@ def pandas_dag():
     api_task = api_pull()
     read_task = read()
     update_task = update(read_task)
+    load_task = load()
     echo_shape=BashOperator(
         task_id='echo_shape',
         bash_command=f'echo {update_task} > /opt/airflow/dags/shape.txt')
-    api_task >> read_task >> update_task >> echo_shape
+    api_task >> read_task >> update_task >> load_task >> echo_shape
 
 pandas_dag = pandas_dag()
