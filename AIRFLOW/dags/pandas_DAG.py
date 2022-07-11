@@ -22,7 +22,6 @@ def api_pull():
     api.authenticate()
     #download dataset 
     api.dataset_download_file('deepcontractor/monkeypox-dataset-daily-updated','Daily_Country_Wise_Confirmed_Cases.csv')
-    #create spark session
 
 
 @task
@@ -42,12 +41,13 @@ def update(shape_xcom):
     """
     Main function to create df of new data
     """
-    # daily_df = spark.read.csv('Daily_Country_Wise_Confirmed_Cases.csv', header=True)
+    #create df from new CSV and determine sghape
     daily_df = pd.read_csv('Daily_Country_Wise_Confirmed_Cases.csv')
-    # daily_shape = (len(daily_df.columns), daily_df.count())
     daily_shape = daily_df.shape
+    # if there is no new data, simply return the existing shape
     if daily_shape == shape_xcom:
         return daily_shape
+    #if there are new rows but no new columns, grab the new rows. The intention here is ease of scalability, so rather than completely overwriting the table every time, the new rows can be appended to the existing tables
     elif daily_shape[0] == shape_xcom[1]:
         rows = daily_shape[0] - shape_xcom[0]
         daily_df = daily_df.iloc[-rows]
@@ -57,6 +57,7 @@ def update(shape_xcom):
         daily_df = daily_df.rename(columns={'index': 'Date'})
         daily_df.to_csv(f"dags/Daily_CC_{date.today()}", header=True)
         return daily_df.shape
+    #if there are new columns, overwrite the dataset and create new CSV
     else:
         daily_df.set_index('Country', inplace=True)
         daily_df = daily_df.transpose()
