@@ -48,7 +48,11 @@ Data Stack Academy team week project that downloads a kaggle dataset and runs it
 
 ###  Details:
 
-This project downloads a daily updated CSV from Kaggle. Then applies cleaning and transformations on it. Also it has data visualization and aggregate dataframes that it draws from the dataset. From there it then takes that CSV and pushes it into the cloud(Google Cloud Services). 
+![dag diagram](./img/dag.png)
+
+This project downloads a daily updated CSV from Kaggle using Kaggle's API. Within the dataset, we download the "Daily_Country_Wise_Confirmed_Cases.csv". We then read that data to do a multitude of transformations. One of the transformations we run is cleaning the data and accounting for issues with the data that may occur. After we clean the data we update our existing data with the new data we receive from Kaggle. After updating our data we then upload it to the cloud through Google Cloud Services, first checking that the data we download is different from what currently exists. Also while updating we run the data through data visualization and aggregates to show different aspects of the data(example below).
+
+![picture of graph](./img/graph1.png)
 
 ###  Known Bugs:
 
