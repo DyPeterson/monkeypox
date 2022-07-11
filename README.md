@@ -36,6 +36,34 @@ Data Stack Academy team week project that downloads a kaggle dataset and runs it
 
 ###  Setup & Installation:
 
+
+1. Through the terminal like [GitBash](https://git-scm.com/downloads)
+
+	2. Open the terminal and navigate to where you would like the new project to be using `cd` commands. Its also recommended that you make a new directory using `mkdir *directory-name*`.
+
+	3. Clone the repository using the command `git clone https://github.com/DyPeterson/monkeypox.git`
+
+	4. After cloning the directory it will appear in the directory that your terminal is set to. So make sure you are in the directory that you want this project copied to.
+
+	5. Once this project is cloned you can navigate to that folder within your terminal and create a virtual environment `python3.7 -m venv *any-name*`. Now activate the venv with `source *any-name*/bin/activate`
+
+	6. Install requirements in venv `pip install -r requirements.txt`
+
+	7. `code .` to open in default coding software.
+
+2. Through GitHub.com
+
+	3. Go to the project's directory page **[HERE](https://github.com/DyPeterson/monkeypox.git)**
+
+	4. Click the green `code` button to open the drop-down menu.
+
+	5. At the bottom of the menu will have *Download Zip*. Go ahead and click it to download the project.
+
+	6. Once downloaded find the `.zip` file and right-click it to bring up the menu. Within that menu click `Extract Here` to extract it in the current folder or click `Extract Files...`to select which folder you would like the project in.
+
+	7. Once the project has been extracted, locate the folder in a terminal and open it with `code .` .
+
+
 ###  Useful Links:
 
 ####  Link to project on GitHub:
